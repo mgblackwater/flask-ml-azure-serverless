@@ -8,20 +8,20 @@ trigger:
 
 variables:
   # Azure Resource Manager connection created during pipeline creation
-  azureServiceConnectionId: 'e1c0b1c5-8339-400a-acd4-f892200e816c'
-  
+  azureServiceConnectionId: 'Flask ML App Service'
+
   # Web app name
-  webAppName: 'mgblackwater-flask-ml-service'
+  webAppName: 'flask-ml-service'
 
   # Agent VM image name
   vmImageName: 'ubuntu-latest'
 
   # Environment name
-  environmentName: 'mgblackwater-flask-ml-service'
+  environmentName: 'flask-ml-service'
 
   # Project root folder. Point to the folder containing manage.py file.
   projectRoot: $(System.DefaultWorkingDirectory)
-  
+
   # Python version: 3.7
   pythonVersion: '3.7'
 
@@ -37,7 +37,7 @@ stages:
       inputs:
         versionSpec: '$(pythonVersion)'
       displayName: 'Use Python $(pythonVersion)'
-    
+
     - script: |
         python -m venv antenv
         source antenv/bin/activate
@@ -73,14 +73,14 @@ stages:
       runOnce:
         deploy:
           steps:
-          
+
           - task: UsePythonVersion@0
             inputs:
               versionSpec: '$(pythonVersion)'
             displayName: 'Use Python version'
 
           - task: AzureWebApp@1
-            displayName: 'Deploy Azure Web App : mgblackwater-flask-ml-service'
+            displayName: 'Deploy Azure Web App : flask-ml-service'
             inputs:
               azureSubscription: $(azureServiceConnectionId)
               appName: $(webAppName)
